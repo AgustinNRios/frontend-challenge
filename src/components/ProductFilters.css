@@ -1,6 +1,6 @@
 /* Product Filters Component Styles */
 .product-filters {
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 
 .filters-card {
@@ -135,11 +135,18 @@
   background: white;
 }
 
+/* supplier and priceRange Container */
+.supplier-priceRange-reset-container {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
 /* Supplier List */
 .supplier-list {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  flex-direction: row;
+  gap: 24px;
 }
 
 .supplier-item {

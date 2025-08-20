@@ -86,68 +86,71 @@ const ProductFilters = ({
           </select>
         </div>
 
-        {/* Quick Stats - Bug: hardcoded values instead of dynamic */}
-        <div className="filter-section">
-          <h3 className="filter-title p1-medium">Proveedores</h3>
-          <div className="supplier-list">
-            {suppliers.map(supplier => (
-              <button key={supplier.id} className="supplier-item" onClick={() => onSupplierChange(supplier.id)}>
-                <span className="supplier-name l1">{supplier.name}</span>
-                <span className="supplier-count l1">{supplier.products}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="filter-section">
-          <h3 className="filter-title p1-medium">Rango de precios</h3>
-          <div className="price-range">
-            <div className="price-input-group">
-              <input 
-                type="number" 
-                className="price-input" 
-                placeholder="Mínimo" 
-                min="0"
-                value={minPrice}
-                onChange={(e) => {
-                  const value = e.target.value ? Number(e.target.value) : ''
-                  setMinPrice(value)
-                  onPriceRangeChange(value === '' ? null : value, maxPrice === '' ? null : maxPrice)
-                }}
-              />
-              <span className="price-separator">-</span>
-              <input 
-                type="number" 
-                className="price-input" 
-                placeholder="Máximo" 
-                min="0"
-                value={maxPrice}
-                onChange={(e) => {
-                  const value = e.target.value ? Number(e.target.value) : ''
-                  setMaxPrice(value)
-                  onPriceRangeChange(minPrice === '' ? null : minPrice, value === '' ? null : value)
-                }}
-              />
+        <div className='supplier-priceRange-reset-container'>
+          {/* Quick Stats - Bug: hardcoded values instead of dynamic */}
+          <div className="filter-section">
+            <h3 className="filter-title p1-medium">Proveedores</h3>
+            <div className="supplier-list">
+              {suppliers.map(supplier => (
+                <button key={supplier.id} className="supplier-item" onClick={() => onSupplierChange(supplier.id)}>
+                  <span className="supplier-name l1">{supplier.name}</span>
+                  <span className="supplier-count l1">{supplier.products}</span>
+                </button>
+              ))}
             </div>
           </div>
-        </div>
 
-        {/* Reset Button */}
-        <div className="filter-section" style={{ borderTop: '1px solid #f1f5f9' }}>
-          <button 
-            className="btn btn-secondary reset-btn"
-            onClick={onReset}
-            onMouseOver={(e) => {
-              e.currentTarget.style.backgroundColor = '#f1f5f9';
-              e.currentTarget.style.borderColor = '#cbd5e1';
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.backgroundColor = '#f8fafc';
-              e.currentTarget.style.borderColor = '#e2e8f0';
-            }}
-          >
-            Restablecer filtros
-          </button>
+          <div className="filter-section">
+            <h3 className="filter-title p1-medium">Rango de precios</h3>
+            <div className="price-range">
+              <div className="price-input-group">
+                <input 
+                  type="number" 
+                  className="price-input" 
+                  placeholder="Mínimo" 
+                  min="0"
+                  value={minPrice}
+                  onChange={(e) => {
+                    const value = e.target.value ? Number(e.target.value) : ''
+                    setMinPrice(value)
+                    onPriceRangeChange(value === '' ? null : value, maxPrice === '' ? null : maxPrice)
+                  }}
+                />
+                <span className="price-separator">-</span>
+                <input 
+                  type="number" 
+                  className="price-input" 
+                  placeholder="Máximo" 
+                  min="0"
+                  value={maxPrice}
+                  onChange={(e) => {
+                    const value = e.target.value ? Number(e.target.value) : ''
+                    setMaxPrice(value)
+                    onPriceRangeChange(minPrice === '' ? null : minPrice, value === '' ? null : value)
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Reset Button */}
+          <div className="filter-section" style={{ borderTop: '1px solid #f1f5f9'}}>
+            <h3 className="filter-title p1-medium">Limpiar filtros</h3>
+            <button 
+              className="btn btn-secondary reset-btn"
+              onClick={onReset}
+              onMouseOver={(e) => {
+                e.currentTarget.style.backgroundColor = '#f1f5f9';
+                e.currentTarget.style.borderColor = '#cbd5e1';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.backgroundColor = '#f8fafc';
+                e.currentTarget.style.borderColor = '#e2e8f0';
+              }}
+            >
+              Limpiar filtros
+            </button>
+          </div>
         </div>
       </div>
     </div>
