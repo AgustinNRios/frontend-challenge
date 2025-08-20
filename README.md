@@ -1,8 +1,5 @@
 # 🎯 SWAG Frontend Challenge
 
-**Tiempo estimado:** 45-90 minutos  
-**Objetivo:** Crear un mini catálogo de productos funcional con React + TypeScript
-
 ---
 
 ## 🚀 Comenzar
@@ -23,18 +20,6 @@ npm run dev
 ```
 
 ---
-
-## 📋 Tu Misión
-
-Eres el desarrollador frontend de **SWAG Chile** y necesitas completar un catálogo de productos para el lanzamiento. El diseño está implementado, pero hay **bugs que corregir** y **funcionalidades que completar**.
-
-### **Lo que YA está funcionando:**
-✅ Estructura básica del proyecto  
-✅ Diseño y estilos CSS  
-✅ Navegación entre páginas  
-✅ Datos de productos mock  
-
-### **Lo que NECESITAS hacer:**
 
 #### **🐛 PARTE 1: Detección y Corrección de Bugs (40 puntos)**
 
@@ -83,33 +68,9 @@ Sorpréndenos con mejoras que creas importantes:
 - **Funcionalidades extra:** Lo que creas que falta para una mejor experiencia
 
 ---
-
-## 📊 Cómo te Evaluamos
-
-### **Sistema de Puntos:**
-- 🐛 **Bugs corregidos:** 5 puntos cada uno (max 40 pts)
-- 🛠️ **Funcionalidades:** 10 puntos cada una (max 40 pts)  
-- 🎨 **Creatividad:** Hasta 20 puntos extra
-- ⚡ **Velocidad:** Bonus por completarlo en la ventana de tiempo asignada
-
-### **Criterios de Evaluación:**
-1. **Funcionamiento:** ¿La aplicación corre sin errores?
-2. **Calidad del código:** ¿Es limpio y mantenible?
-3. **Solución de problemas:** ¿Detectaste y solucionaste los bugs?
-4. **Implementación:** ¿Las nuevas funcionalidades funcionan correctamente?
-5. **UX/UI:** ¿La experiencia de usuario es fluida?
-6. **Innovación:** ¿Agregaste valor extra no solicitado?
-
 ---
 
 ## 🎯 Consejos para el Éxito
-
-### **⚡ Para máximo puntaje:**
-- **Lee TODO este README** antes de empezar a codear
-- **Prioriza los bugs** antes que las funcionalidades nuevas
-- **Testea cada cambio** para asegurar que funciona
-- **Comenta tu código** si haces algo complejo
-- **Haz commits descriptivos** para mostrar tu proceso
 
 ### **🔍 Pistas para encontrar bugs:**
 - Revisa `src/data/products.ts` - hay inconsistencias de datos
@@ -172,35 +133,9 @@ Sorpréndenos con mejoras que creas importantes:
 
 **NO** puedes hacer preguntas durante el challenge - parte del test es manejar ambigüedad de forma autónoma. Sin embargo, si tienes problemas técnicos para ejecutar el proyecto, puedes escribir a `dev@swag.cl`.
 
----
-
-## 🎮 Ready? ¡Let's Code!
-
-**Recuerda:** Buscamos desarrolladores que puedan **resolver problemas reales** bajo presión, **entregar resultados rápidos** y **pensar como usuarios**. 
-
-**¡Demuéstranos de qué estás hecho! 🚀**
-
----
-
-## Nota Importante
-
-Agradecemos tu postulación para el cargo de Desarrollador/a Front-end en SWAG. Debido a la gran cantidad de postulaciones y a la urgencia de nuestro proceso, hemos diseñado este desafío técnico para evaluar de forma rápida y justa a todos los candidatos.
-
-**Sobre el Desafío**
-Entendemos que este desafío es más extenso de lo habitual. Lo hemos creado para evaluar tus habilidades de resolución de problemas en un entorno realista. Queremos ser transparentes contigo:
-
-**Propósito:**
-Es una prueba diseñada exclusivamente para este proceso. El objetivo es que demuestres tus capacidades en un proyecto que simula las condiciones de trabajo que encontrarás con nosotros.
-
-**Ética y Respeto:**
-Valoramos y respetamos tu tiempo y trabajo. El código que desarrolles será revisado únicamente con fines de evaluación y bajo ninguna circunstancia se utilizará en nuestro producto final.
 
 **Flujo del proceso:**
 - Envías tu solución.
 - Nuestro sistema la evalúa de forma automática y te envía un correo con tu puntaje.
 - Si tu puntaje es excepcional, te contactaremos para agendar una entrevista por video.
 - Si no eres seleccionado, puedes eliminar tu repositorio una vez que recibas el correo con tu puntaje.
-
-Agradecemos tu comprensión e interés.
-
----
