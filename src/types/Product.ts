@@ -29,7 +29,6 @@ export interface CartItem extends Product {
   selectedColor?: string
   selectedSize?: string
   unitPrice: number
-  totalPrice: number
 }
 
 export interface Category {
