@@ -27,7 +27,7 @@ Encuentra y corrige estos 8 bugs críticos:
 
 <!-- 1. **Bug de Búsqueda:** La búsqueda es case-sensitive y no encuentra productos -->
 <!-- 2. **Bug de Ordenamiento:** Falta implementar ordenamiento por precio -->
-3. **Bug de Estado:** Productos "pending" se muestran como "disponibles"
+<!-- 3. **Bug de Estado:** Productos "pending" se muestran como "disponibles" -->
 4. **Bug de Stock:** Un producto aparece sin stock cuando debería tener 150 unidades
 5. **Bug de Datos:** Faltan 14 productos para llegar al total prometido de 20
 6. **Bug de Cálculo:** La calculadora de precios no encuentra el mejor descuento por volumen
@@ -63,7 +63,7 @@ Implementa estas 4 funcionalidades clave:
 Sorpréndenos con mejoras que creas importantes:
 
 - **Performance:** Optimizaciones que consideres necesarias
-- **Accesibilidad:** Mejoras para usuarios con discapacidades  
+- **Accesibilidad:** Mejoras para usuarios con discapacidades
 - **Mobile:** Optimizaciones para dispositivos móviles
 - **Funcionalidades extra:** Lo que creas que falta para una mejor experiencia
 
@@ -107,11 +107,11 @@ Sorpréndenos con mejoras que creas importantes:
 3. **Despliega en Vercel/Netlify** (recomendado)
 
 4. **Envía tu solución automáticamente:**
-   
+
    ## 🎯 **[ENVIAR CHALLENGE →](https://swag-challenge-form.vercel.app)**
-   
+
    ⚠️ **IMPORTANTE:** Usa el formulario oficial arriba para enviar tu solución.
-   
+
    **Información requerida:**
    - 🔗 URL de tu repositorio GitHub (fork con tu solución)
    - 🚀 URL de la aplicación desplegada (opcional)
