@@ -30,9 +30,9 @@ Encuentra y corrige estos 8 bugs críticos:
 <!-- 3. **Bug de Estado:** Productos "pending" se muestran como "disponibles" -->
 4. **Bug de Stock:** Un producto aparece sin stock cuando debería tener 150 unidades
 5. **Bug de Datos:** Faltan 14 productos para llegar al total prometido de 20
-6. **Bug de Cálculo:** La calculadora de precios no encuentra el mejor descuento por volumen
-7. **Bug de Formato:** Los precios no muestran formato chileno (CLP)
-8. **Bug de Validación:** No hay validación de cantidad máxima en inputs
+<!-- 6. **Bug de Cálculo:** La calculadora de precios no encuentra el mejor descuento por volumen -->
+<!-- 7. **Bug de Formato:** Los precios no muestran formato chileno (CLP) -->
+<!-- 8. **Bug de Validación:** No hay validación de cantidad máxima en inputs -->
 
 #### **🛠️ PARTE 2: Implementación de Funcionalidades (40 puntos)**
 

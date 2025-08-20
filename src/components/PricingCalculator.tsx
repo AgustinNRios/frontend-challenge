@@ -11,6 +11,19 @@ const PricingCalculator = ({ product }: PricingCalculatorProps) => {
   const [quantity, setQuantity] = useState<number>(product.stock > 0 ? 1 : 0)
   const [selectedBreak, setSelectedBreak] = useState<number>(0)
 
+  // Find the best applicable price break for a given quantity
+  const findBestBreakIndex = (qty: number) => {
+    if (!product.priceBreaks || product.priceBreaks.length === 0) return 0
+    
+    let bestIndex = 0
+    for (let i = 0; i < product.priceBreaks.length; i++) {
+      if (qty >= product.priceBreaks[i].minQty) {
+        bestIndex = i
+      }
+    }
+    return bestIndex
+  }
+
   // Calculate best pricing for quantity
   const calculatePrice = (qty: number) => {
     if (!product.priceBreaks || product.priceBreaks.length === 0) {
@@ -64,7 +77,9 @@ const PricingCalculator = ({ product }: PricingCalculatorProps) => {
               onChange={(e) => {
                 const value = parseInt(e.target.value) || 0
                 const maxStock = product.stock || 0
-                setQuantity(Math.max(0, Math.min(value, maxStock)))
+                const newQuantity = Math.max(0, Math.min(value, maxStock))
+                setQuantity(newQuantity)
+                setSelectedBreak(findBestBreakIndex(newQuantity))
               }}
               className="quantity-input p1"
               min="0"
