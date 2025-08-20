@@ -25,8 +25,8 @@ npm run dev
 
 Encuentra y corrige estos 8 bugs críticos:
 
-1. **Bug de Búsqueda:** La búsqueda es case-sensitive y no encuentra productos
-2. **Bug de Ordenamiento:** Falta implementar ordenamiento por precio
+<!-- 1. **Bug de Búsqueda:** La búsqueda es case-sensitive y no encuentra productos -->
+<!-- 2. **Bug de Ordenamiento:** Falta implementar ordenamiento por precio -->
 3. **Bug de Estado:** Productos "pending" se muestran como "disponibles"
 4. **Bug de Stock:** Un producto aparece sin stock cuando debería tener 150 unidades
 5. **Bug de Datos:** Faltan 14 productos para llegar al total prometido de 20

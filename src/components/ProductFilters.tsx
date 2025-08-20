@@ -18,6 +18,7 @@ const ProductFilters = ({
   onSearchChange,
   onSortChange
 }: ProductFiltersProps) => {
+
   return (
     <div className="product-filters">
       <div className="filters-card">
@@ -69,8 +70,10 @@ const ProductFilters = ({
             onChange={(e) => onSortChange(e.target.value)}
             className="sort-select p1"
           >
+            
             <option value="name">Nombre A-Z</option>
-            <option value="price">Precio</option>
+            <option value="price-asc">Menor precio</option>
+            <option value="price-desc">Mayor precio</option>
             <option value="stock">Stock disponible</option>
           </select>
         </div>
