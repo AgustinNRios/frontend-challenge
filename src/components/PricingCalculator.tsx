@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import { Product } from '../types/Product'
 import './PricingCalculator.css'
+import { formatPrice } from '../helpers/FormatPrice'
 
 interface PricingCalculatorProps {
   product: Product
 }
 
 const PricingCalculator = ({ product }: PricingCalculatorProps) => {
-  const [quantity, setQuantity] = useState<number>(1)
+  const [quantity, setQuantity] = useState<number>(product.stock > 0 ? 1 : 0)
   const [selectedBreak, setSelectedBreak] = useState<number>(0)
 
   // Calculate best pricing for quantity
@@ -38,11 +39,6 @@ const PricingCalculator = ({ product }: PricingCalculatorProps) => {
     
     // Calculate savings percentage
     return ((baseTotal - discountedTotal) / baseTotal) * 100
-  }
-
-  // Format price display
-  const formatPrice = (price: number) => {
-    return `$${price.toLocaleString()}` // Should be CLP formatting
   }
 
   const currentPrice = calculatePrice(quantity)
@@ -122,7 +118,10 @@ const PricingCalculator = ({ product }: PricingCalculatorProps) => {
           <div className="summary-row">
             <span className="summary-label p1">Precio unitario:</span>
             <span className="summary-value p1-medium">
-              {formatPrice(calculatePrice(quantity) / quantity)}
+              {quantity > 0 ? formatPrice(calculatePrice(quantity) / quantity) : 
+                (selectedBreak > 0 && product.priceBreaks && product.priceBreaks[selectedBreak] ? 
+                formatPrice(product.priceBreaks[selectedBreak].price) : 
+                formatPrice(product.basePrice))}
             </span>
           </div>
           
