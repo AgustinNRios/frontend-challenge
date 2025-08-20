@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { categories, suppliers } from '../data/products'
 import './ProductFilters.css'
 
@@ -27,6 +27,17 @@ const ProductFilters = ({
 }: ProductFiltersProps) => {
   const [minPrice, setMinPrice] = useState<number | ''>('')
   const [maxPrice, setMaxPrice] = useState<number | ''>('')
+  const [resetTrigger, setResetTrigger] = useState(0)
+
+  useEffect(() => {
+    setMinPrice('')
+    setMaxPrice('')
+  }, [resetTrigger])
+
+  const handleReset = () => {
+    setResetTrigger(prev => prev + 1)
+    onReset()
+  }
 
   return (
     <div className="product-filters">
@@ -138,7 +149,7 @@ const ProductFilters = ({
             <h3 className="filter-title p1-medium">Limpiar filtros</h3>
             <button 
               className="btn btn-secondary reset-btn"
-              onClick={onReset}
+              onClick={handleReset}
               onMouseOver={(e) => {
                 e.currentTarget.style.backgroundColor = '#f1f5f9';
                 e.currentTarget.style.borderColor = '#cbd5e1';
