@@ -4,6 +4,7 @@ import { products } from '../data/products'
 import { Product } from '../types/Product'
 import { useCartStore } from '../store/cartStore'
 import PricingCalculator from '../components/PricingCalculator'
+import QuoteSimulator from '../components/QuoteSimulator'
 import './ProductDetail.css'
 
 const ProductDetail = () => {
@@ -13,6 +14,7 @@ const ProductDetail = () => {
   const [selectedColor, setSelectedColor] = useState<string>('')
   const [selectedSize, setSelectedSize] = useState<string>('')
   const [quantity, setQuantity] = useState<number>(1)
+  const [showQuoteSimulator, setShowQuoteSimulator] = useState<boolean>(false)
 
   useEffect(() => {
     if (id) {
@@ -216,7 +218,7 @@ const ProductDetail = () => {
                 
                 <button 
                   className="btn btn-secondary cta1"
-                  onClick={() => alert('Función de cotización por implementar')}
+                  onClick={() => setShowQuoteSimulator(true)}
                 >
                   <span className="material-icons">calculate</span>
                   Solicitar cotización
@@ -230,6 +232,15 @@ const ProductDetail = () => {
         <div className="pricing-section">
           <PricingCalculator product={product} />
         </div>
+
+        {/* Quote Simulator Modal */}
+        {showQuoteSimulator && (
+          <QuoteSimulator 
+            product={product}
+            initialQuantity={quantity}
+            onClose={() => setShowQuoteSimulator(false)}
+          />
+        )}
       </div>
     </div>
   )

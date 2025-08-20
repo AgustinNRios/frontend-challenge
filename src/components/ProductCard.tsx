@@ -1,7 +1,10 @@
+import { useState } from 'react'
+import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
 import { Product } from '../types/Product'
 import { formatPrice } from '../helpers/FormatPrice'
 import { useCartStore } from '../store/cartStore'
+import QuoteSimulator from './QuoteSimulator'
 import './ProductCard.css'
 
 interface ProductCardProps {
@@ -10,6 +13,7 @@ interface ProductCardProps {
 
 const ProductCard = ({ product }: ProductCardProps) => {
   const { addItem } = useCartStore()
+  const [showQuoteSimulator, setShowQuoteSimulator] = useState<boolean>(false)
   // Handle product status display
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -36,124 +40,141 @@ const ProductCard = ({ product }: ProductCardProps) => {
     return <span className="stock-status in-stock l1">{stock} disponibles</span>
   }
 
-  // Calculate discount percentage
-  const getDiscountPrice = () => {
+  // Calculate discount price and minimum quantity
+  const getBestPriceInfo = () => {
     if (product.priceBreaks && product.priceBreaks.length > 1) {
       const bestDiscount = product.priceBreaks[product.priceBreaks.length - 1]
-      return bestDiscount.price
+      return {
+        price: bestDiscount.price,
+        minQty: bestDiscount.minQty
+      }
     }
     return null
   }
 
+  const bestPriceInfo = getBestPriceInfo()
+
   return (
-    <div className="product-card">
-      <Link to={`/product/${product.id}`} className="product-link">
-        {/* Product Image */}
-        <div className="product-image">
-          {/* Bug: no real image handling */}
-          <div className="image-placeholder">
-            <span className="material-icons">image</span>
-          </div>
-          
-          {/* Status Badge */}
-          <div className="product-status">
-            {getStatusBadge(product.status)}
-          </div>
-        </div>
-
-        {/* Product Info */}
-        <div className="product-info">
-          <div className="product-header">
-            <h3 className="product-name p1-medium">{product.name}</h3>
-            <p className="product-sku l1">{product.sku}</p>
-          </div>
-
-          <div className="product-details">
-            <div className="product-category">
-              <span className="material-icons">category</span>
-              <span className="l1">{product.category}</span>
+    <>
+      <div className="product-card">
+        <Link to={`/product/${product.id}`} className="product-link">
+          {/* Product Image */}
+          <div className="product-image">
+            {/* Bug: no real image handling */}
+            <div className="image-placeholder">
+              <span className="material-icons">image</span>
             </div>
             
-            {getStockStatus(product.stock)}
+            {/* Status Badge */}
+            <div className="product-status">
+              {getStatusBadge(product.status)}
+            </div>
           </div>
 
-          {/* Features - Bug: displays all features without limit */}
-          {product.features && (
-            <div className="product-features">
-              {product.features.map((feature, index) => (
-                <span key={index} className="feature-tag l1">{feature}</span>
-              ))}
+          {/* Product Info */}
+          <div className="product-info">
+            <div className="product-header">
+              <h3 className="product-name p1-medium">{product.name}</h3>
+              <p className="product-sku l1">{product.sku}</p>
             </div>
-          )}
 
-          {/* Colors */}
-          {product.colors && product.colors.length > 0 && (
-            <div className="product-colors">
-              <span className="colors-label l1">{product.colors.length} colores:</span>
-              <div className="colors-preview">
-                {product.colors.slice(0, 3).map((color, index) => (
-                  <div key={index} className="color-dot" title={color}></div>
-                ))}
-                {product.colors.length > 3 && (
-                  <span className="more-colors l1">+{product.colors.length - 3}</span>
-                )}
+            <div className="product-details">
+              <div className="product-category">
+                <span className="material-icons">category</span>
+                <span className="l1">{product.category}</span>
               </div>
+              
+              {getStockStatus(product.stock)}
             </div>
-          )}
-        </div>
-      </Link>
 
-      {/* Product Footer */}
-      <div className="product-footer">
-        <div className="price-section">
-          <div className="current-price p1-medium">{formatPrice(product.basePrice)}</div>
-          {getDiscountPrice() && (
-            <div className="discount-info">
-              <span className="discount-price l1">{formatPrice(getDiscountPrice()!)}</span>
-              <span className="discount-label l1">desde 50 unidades</span>
-            </div>
-          )}
-        </div>
+            {/* Features - Bug: displays all features without limit */}
+            {product.features && (
+              <div className="product-features">
+                {product.features.map((feature, index) => (
+                  <span key={index} className="feature-tag l1">{feature}</span>
+                ))}
+              </div>
+            )}
 
-        <div className="card-actions">
-          <button 
-            className="btn btn-secondary l1"
-            onClick={(e) => {
-              e.preventDefault()
-              alert('Función de cotización por implementar')
-            }}
-          >
-            <span className="material-icons">calculate</span>
-            Cotizar
-          </button>
-          
-          <button 
-            className="btn btn-primary l1"
-            onClick={(e) => {
-              e.preventDefault()
-              if (product.status === 'active' && product.stock > 0) {
-                addItem(product, 1)
-                // Show success feedback
-                const button = e.currentTarget
-                const originalText = button.innerHTML
-                button.innerHTML = '<span class="material-icons">check</span> Agregado'
-                button.disabled = true
-                setTimeout(() => {
-                  button.innerHTML = originalText
-                  button.disabled = false
-                }, 1500)
-              } else {
-                alert('No hay stock de este producto')
-              }
-            }}
-            disabled={product.status !== 'active' || product.stock === 0}
-          >
-            <span className="material-icons">add_shopping_cart</span>
-            Agregar
-          </button>
+            {/* Colors */}
+            {product.colors && product.colors.length > 0 && (
+              <div className="product-colors">
+                <span className="colors-label l1">{product.colors.length} colores:</span>
+                <div className="colors-preview">
+                  {product.colors.slice(0, 3).map((color, index) => (
+                    <div key={index} className="color-dot" title={color}></div>
+                  ))}
+                  {product.colors.length > 3 && (
+                    <span className="more-colors l1">+{product.colors.length - 3}</span>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+        </Link>
+
+        {/* Product Footer */}
+        <div className="product-footer">
+          <div className="price-section">
+            <div className="current-price p1-medium">{formatPrice(product.basePrice)}</div>
+            {bestPriceInfo && (
+              <div className="discount-info">
+                <span className="discount-price l1">{formatPrice(bestPriceInfo.price)}</span>
+                <span className="discount-label l1">desde {bestPriceInfo.minQty} unidades</span>
+              </div>
+            )}
+          </div>
+
+          <div className="card-actions">
+            <button 
+              className="btn btn-secondary l1"
+              onClick={(e) => {
+                e.preventDefault()
+                setShowQuoteSimulator(true)
+              }}
+            >
+              <span className="material-icons">calculate</span>
+              Cotizar
+            </button>
+            
+            <button 
+              className="btn btn-primary l1"
+              onClick={(e) => {
+                e.preventDefault()
+                if (product.status === 'active' && product.stock > 0) {
+                  addItem(product, 1)
+                  // Show success feedback
+                  const button = e.currentTarget
+                  const originalText = button.innerHTML
+                  button.innerHTML = '<span class="material-icons">check</span> Agregado'
+                  button.disabled = true
+                  setTimeout(() => {
+                    button.innerHTML = originalText
+                    button.disabled = false
+                  }, 1500)
+                } else {
+                  alert('No hay stock de este producto')
+                }
+              }}
+              disabled={product.status !== 'active' || product.stock === 0}
+            >
+              <span className="material-icons">add_shopping_cart</span>
+              Agregar
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+
+      {/* Quote Simulator Modal - Rendered as Portal */}
+      {showQuoteSimulator && createPortal(
+        <QuoteSimulator 
+          product={product}
+          initialQuantity={1}
+          onClose={() => setShowQuoteSimulator(false)}
+        />,
+        document.body
+      )}
+    </>
   )
 }
 
