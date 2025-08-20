@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { categories, suppliers } from '../data/products'
 import './ProductFilters.css'
 
@@ -8,6 +9,8 @@ interface ProductFiltersProps {
   onCategoryChange: (category: string) => void
   onSearchChange: (search: string) => void
   onSortChange: (sort: string) => void
+  onSupplierChange: (supplier: string) => void
+  onPriceRangeChange: (min: number | null, max: number | null) => void
 }
 
 const ProductFilters = ({
@@ -16,8 +19,12 @@ const ProductFilters = ({
   sortBy,
   onCategoryChange,
   onSearchChange,
-  onSortChange
+  onSortChange,
+  onSupplierChange,
+  onPriceRangeChange,
 }: ProductFiltersProps) => {
+  const [minPrice, setMinPrice] = useState<number | ''>('')
+  const [maxPrice, setMaxPrice] = useState<number | ''>('')
 
   return (
     <div className="product-filters">
@@ -70,7 +77,6 @@ const ProductFilters = ({
             onChange={(e) => onSortChange(e.target.value)}
             className="sort-select p1"
           >
-            
             <option value="name">Nombre A-Z</option>
             <option value="price-asc">Menor precio</option>
             <option value="price-desc">Mayor precio</option>
@@ -83,11 +89,44 @@ const ProductFilters = ({
           <h3 className="filter-title p1-medium">Proveedores</h3>
           <div className="supplier-list">
             {suppliers.map(supplier => (
-              <div key={supplier.id} className="supplier-item">
+              <button key={supplier.id} className="supplier-item" onClick={() => onSupplierChange(supplier.id)}>
                 <span className="supplier-name l1">{supplier.name}</span>
                 <span className="supplier-count l1">{supplier.products}</span>
-              </div>
+              </button>
             ))}
+          </div>
+        </div>
+
+        <div className="filter-section">
+          <h3 className="filter-title p1-medium">Rango de precios</h3>
+          <div className="price-range">
+            <div className="price-input-group">
+              <input 
+                type="number" 
+                className="price-input" 
+                placeholder="Mínimo" 
+                min="0"
+                value={minPrice}
+                onChange={(e) => {
+                  const value = e.target.value ? Number(e.target.value) : ''
+                  setMinPrice(value)
+                  onPriceRangeChange(value === '' ? null : value, maxPrice === '' ? null : maxPrice)
+                }}
+              />
+              <span className="price-separator">-</span>
+              <input 
+                type="number" 
+                className="price-input" 
+                placeholder="Máximo" 
+                min="0"
+                value={maxPrice}
+                onChange={(e) => {
+                  const value = e.target.value ? Number(e.target.value) : ''
+                  setMaxPrice(value)
+                  onPriceRangeChange(minPrice === '' ? null : minPrice, value === '' ? null : value)
+                }}
+              />
+            </div>
           </div>
         </div>
       </div>

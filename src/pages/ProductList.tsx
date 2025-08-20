@@ -7,12 +7,23 @@ import './ProductList.css'
 
 const ProductList = () => {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(allProducts)
+  const [supplierFilter, setSupplierFilter] = useState('all')
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
   const [sortBy, setSortBy] = useState('name')
+  const [priceRange, setPriceRange] = useState<{ min: number | null; max: number | null }>({
+    min: null,
+    max: null
+  })
 
   // Filter and sort products based on criteria
-  const filterProducts = (category: string, search: string, sort: string) => {
+  const filterProducts = (
+    category: string, 
+    search: string, 
+    sort: string, 
+    supplier: string,
+    priceRange: { min: number | null; max: number | null }
+  ) => {
     let filtered = [...allProducts]
 
     // Category filter
@@ -27,6 +38,19 @@ const ProductList = () => {
         product.name.toLowerCase().includes(searchLower) ||
         product.sku.toLowerCase().includes(searchLower)
       )
+    }
+
+    // Suppliers filter
+    if (supplier !== 'all') {
+      filtered = filtered.filter(product => product.supplier === supplier)
+    }
+
+    // Price range filter
+    if (priceRange.min !== null) {
+      filtered = filtered.filter(product => product.basePrice >= priceRange.min!)
+    }
+    if (priceRange.max !== null) {
+      filtered = filtered.filter(product => product.basePrice <= priceRange.max!)
     }
 
     // Sorting logic
@@ -52,17 +76,28 @@ const ProductList = () => {
 
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category)
-    filterProducts(category, searchQuery, sortBy)
+    filterProducts(category, searchQuery, sortBy, supplierFilter, priceRange)
   }
 
   const handleSearchChange = (search: string) => {
     setSearchQuery(search)
-    filterProducts(selectedCategory, search, sortBy)
+    filterProducts(selectedCategory, search, sortBy, supplierFilter, priceRange)
   }
 
   const handleSortChange = (sort: string) => {
     setSortBy(sort)
-    filterProducts(selectedCategory, searchQuery, sort)
+    filterProducts(selectedCategory, searchQuery, sort, supplierFilter, priceRange)
+  }
+
+  const handleSupplierChange = (supplier: string) => {
+    setSupplierFilter(supplier)
+    filterProducts(selectedCategory, searchQuery, sortBy, supplier, priceRange)
+  }
+
+  const handlePriceRangeChange = (min: number | null, max: number | null) => {
+    const newPriceRange = { min, max }
+    setPriceRange(newPriceRange)
+    filterProducts(selectedCategory, searchQuery, sortBy, supplierFilter, newPriceRange)
   }
 
   return (
@@ -97,6 +132,8 @@ const ProductList = () => {
           onCategoryChange={handleCategoryChange}
           onSearchChange={handleSearchChange}
           onSortChange={handleSortChange}
+          onSupplierChange={handleSupplierChange}
+          onPriceRangeChange={handlePriceRangeChange}
         />
 
         {/* Products Grid */}
@@ -111,7 +148,9 @@ const ProductList = () => {
                 onClick={() => {
                   setSearchQuery('')
                   setSelectedCategory('all')
-                  filterProducts('all', '', sortBy)
+                  setSupplierFilter('all')
+                  setPriceRange({ min: null, max: null })
+                  filterProducts('all', '', sortBy, 'all', { min: null, max: null })
                 }}
               >
                 Ver todos los productos
