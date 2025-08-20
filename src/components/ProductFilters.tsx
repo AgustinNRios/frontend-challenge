@@ -11,6 +11,7 @@ interface ProductFiltersProps {
   onSortChange: (sort: string) => void
   onSupplierChange: (supplier: string) => void
   onPriceRangeChange: (min: number | null, max: number | null) => void
+  onReset: () => void
 }
 
 const ProductFilters = ({
@@ -22,6 +23,7 @@ const ProductFilters = ({
   onSortChange,
   onSupplierChange,
   onPriceRangeChange,
+  onReset,
 }: ProductFiltersProps) => {
   const [minPrice, setMinPrice] = useState<number | ''>('')
   const [maxPrice, setMaxPrice] = useState<number | ''>('')
@@ -128,6 +130,24 @@ const ProductFilters = ({
               />
             </div>
           </div>
+        </div>
+
+        {/* Reset Button */}
+        <div className="filter-section" style={{ borderTop: '1px solid #f1f5f9' }}>
+          <button 
+            className="btn btn-secondary reset-btn"
+            onClick={onReset}
+            onMouseOver={(e) => {
+              e.currentTarget.style.backgroundColor = '#f1f5f9';
+              e.currentTarget.style.borderColor = '#cbd5e1';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.backgroundColor = '#f8fafc';
+              e.currentTarget.style.borderColor = '#e2e8f0';
+            }}
+          >
+            Restablecer filtros
+          </button>
         </div>
       </div>
     </div>

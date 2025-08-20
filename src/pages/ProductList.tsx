@@ -100,6 +100,19 @@ const ProductList = () => {
     filterProducts(selectedCategory, searchQuery, sortBy, supplierFilter, newPriceRange)
   }
 
+  const reset = () => {
+    setSelectedCategory('all')
+    setSearchQuery('')
+    setSortBy('name')
+    setSupplierFilter('all')
+    setPriceRange({ min: null, max: null })
+    filterProducts('all', '', 'name', 'all', { min: null, max: null })
+  }
+
+  const handleReset = () => {
+    reset()
+  }
+
   return (
     <div className="product-list-page">
       <div className="container">
@@ -134,6 +147,7 @@ const ProductList = () => {
           onSortChange={handleSortChange}
           onSupplierChange={handleSupplierChange}
           onPriceRangeChange={handlePriceRangeChange}
+          onReset={handleReset}
         />
 
         {/* Products Grid */}
