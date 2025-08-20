@@ -24,6 +24,11 @@ const ProductDetail = () => {
       if (foundProduct?.sizes && foundProduct.sizes.length > 0) {
         setSelectedSize(foundProduct.sizes[0])
       }
+      
+      // Set initial quantity based on stock
+      if (foundProduct) {
+        setQuantity(foundProduct.stock > 0 ? 1 : 0)
+      }
     }
   }, [id])
 
@@ -160,21 +165,29 @@ const ProductDetail = () => {
                 <label className="quantity-label l1">Cantidad:</label>
                 <div className="quantity-controls">
                   <button 
-                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                    onClick={() => setQuantity(Math.max(0, quantity - 1))}
                     className="quantity-btn"
+                    disabled={!product?.stock || product.stock === 0 || quantity <= 0}
                   >
                     <span className="material-icons">remove</span>
                   </button>
                   <input 
                     type="number" 
                     value={quantity} 
-                    onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
+                    onChange={(e) => {
+                      const value = parseInt(e.target.value) || 0
+                      const maxStock = product?.stock || 0
+                      setQuantity(Math.max(0, Math.min(value, maxStock)))
+                    }}
                     className="quantity-input"
-                    min="1"
+                    min="0"
+                    max={product?.stock || 0}
+                    disabled={!product?.stock || product.stock === 0}
                   />
                   <button 
-                    onClick={() => setQuantity(quantity + 1)}
+                    onClick={() => setQuantity(Math.min(quantity + 1, product?.stock || 0))}
                     className="quantity-btn"
+                    disabled={!product?.stock || product.stock === 0 || quantity >= (product?.stock || 0)}
                   >
                     <span className="material-icons">add</span>
                   </button>

@@ -65,10 +65,15 @@ const PricingCalculator = ({ product }: PricingCalculatorProps) => {
             <input
               type="number"
               value={quantity}
-              onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
+              onChange={(e) => {
+                const value = parseInt(e.target.value) || 0
+                const maxStock = product.stock || 0
+                setQuantity(Math.max(0, Math.min(value, maxStock)))
+              }}
               className="quantity-input p1"
-              min="1"
-              max="10000"
+              min="0"
+              max={product.stock || 0}
+              disabled={!product.stock || product.stock === 0}
             />
             <span className="quantity-unit l1">unidades</span>
           </div>
@@ -89,7 +94,9 @@ const PricingCalculator = ({ product }: PricingCalculatorProps) => {
                     className={`price-break ${isActive ? 'active' : ''} ${isSelected ? 'selected' : ''}`}
                     onClick={() => {
                       setSelectedBreak(index)
-                      setQuantity(priceBreak.minQty)
+                      const requestedQty = priceBreak.minQty
+                      const maxStock = product.stock || 0
+                      setQuantity(Math.min(requestedQty, maxStock))
                     }}
                   >
                     <div className="break-quantity l1">
