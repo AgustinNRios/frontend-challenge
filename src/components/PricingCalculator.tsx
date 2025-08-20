@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Product } from '../types/Product'
 import './PricingCalculator.css'
 import { formatPrice } from '../helpers/FormatPrice'
+import QuoteSimulator from './QuoteSimulator'
 
 interface PricingCalculatorProps {
   product: Product
@@ -10,6 +11,7 @@ interface PricingCalculatorProps {
 const PricingCalculator = ({ product }: PricingCalculatorProps) => {
   const [quantity, setQuantity] = useState<number>(product.stock > 0 ? 1 : 0)
   const [selectedBreak, setSelectedBreak] = useState<number>(0)
+  const [showQuoteSimulator, setShowQuoteSimulator] = useState<boolean>(false)
 
   // Find the best applicable price break for a given quantity
   const findBestBreakIndex = (qty: number) => {
@@ -166,10 +168,7 @@ const PricingCalculator = ({ product }: PricingCalculatorProps) => {
         <div className="calculator-actions">
           <button 
             className="btn btn-secondary cta1"
-            onClick={() => {
-              // Handle quote request
-              alert(`Cotización solicitada para ${quantity} unidades de ${product.name}`)
-            }}
+            onClick={() => setShowQuoteSimulator(true)}
           >
             <span className="material-icons">email</span>
             Solicitar cotización oficial
@@ -214,6 +213,15 @@ const PricingCalculator = ({ product }: PricingCalculatorProps) => {
           </div>
         </div>
       </div>
+
+      {/* Quote Simulator Modal */}
+      {showQuoteSimulator && (
+        <QuoteSimulator 
+          product={product}
+          initialQuantity={quantity}
+          onClose={() => setShowQuoteSimulator(false)}
+        />
+      )}
     </div>
   )
 }
