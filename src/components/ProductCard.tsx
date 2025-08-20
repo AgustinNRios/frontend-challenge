@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Product } from '../types/Product'
 import { formatPrice } from '../helpers/FormatPrice'
+import { useCartStore } from '../store/cartStore'
 import './ProductCard.css'
 
 interface ProductCardProps {
@@ -8,6 +9,7 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
+  const { addItem } = useCartStore()
   // Handle product status display
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -123,6 +125,31 @@ const ProductCard = ({ product }: ProductCardProps) => {
           >
             <span className="material-icons">calculate</span>
             Cotizar
+          </button>
+          
+          <button 
+            className="btn btn-primary l1"
+            onClick={(e) => {
+              e.preventDefault()
+              if (product.status === 'active' && product.stock > 0) {
+                addItem(product, 1)
+                // Show success feedback
+                const button = e.currentTarget
+                const originalText = button.innerHTML
+                button.innerHTML = '<span class="material-icons">check</span> Agregado'
+                button.disabled = true
+                setTimeout(() => {
+                  button.innerHTML = originalText
+                  button.disabled = false
+                }, 1500)
+              } else {
+                alert('No hay stock de este producto')
+              }
+            }}
+            disabled={product.status !== 'active' || product.stock === 0}
+          >
+            <span className="material-icons">add_shopping_cart</span>
+            Agregar
           </button>
         </div>
       </div>

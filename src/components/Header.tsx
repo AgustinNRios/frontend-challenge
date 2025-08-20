@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import CartIcon from './CartIcon'
 import './Header.css'
 
 const Header = () => {
@@ -20,10 +21,7 @@ const Header = () => {
               <span className="material-icons">home</span>
               Catálogo
             </Link>
-            <button className="nav-link l1" onClick={() => alert('Función de carrito por implementar')}>
-              <span className="material-icons">shopping_cart</span>
-              Carrito (0)
-            </button>
+            <CartIcon />
           </nav>
 
           {/* Actions */}
